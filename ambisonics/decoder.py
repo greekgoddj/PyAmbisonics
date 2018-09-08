@@ -22,12 +22,25 @@ class Decoder:
         self.SetSpeakerLayout(layout)
 
     def SetSpeakerLayout(self, layout:SpeakerLayout):
+        self.speakers = []
+        if (layout == SpeakerLayout.Mono):
+            self.speakers.append(speaker.Speaker(self.format))
+            self.speakers[0].SetAzimuth(math.radians(30.0))
+        if (layout == SpeakerLayout.Stereo):
+            self.speakers.append(speaker.Speaker(self.format))
+            self.speakers[0].SetAzimuth(math.radians(30))
+            self.speakers.append(speaker.Speaker(self.format))
+            self.speakers[1].SetAzimuth(math.radians(-30))
         if (layout == SpeakerLayout.Quad):
-            self.speakers = [speaker.Speaker(self.format)] * 4
+            self.speakers.append(speaker.Speaker(self.format))
             self.speakers[0].SetAzimuth(math.radians(45.0))
+            self.speakers.append(speaker.Speaker(self.format))
             self.speakers[1].SetAzimuth(math.radians(-45.0))
+            self.speakers.append(speaker.Speaker(self.format))
             self.speakers[2].SetAzimuth(math.radians(135.0))
+            self.speakers.append(speaker.Speaker(self.format))
             self.speakers[3].SetAzimuth(math.radians(-135.0))
+            self.speakers.append(speaker.Speaker(self.format))
         else:
             print("Speaker layout set to unknown") # TODO add proper error handling
 
